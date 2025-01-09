@@ -1,0 +1,2 @@
+# Online-Payment-Fraud-Detection-Using-Machine-Learning-Modals
+This project builds a machine learning-based Fraud Detection System to classify financial transactions as fraudulent or non-fraudulent using a preprocessed dataset and a trained Decision-Tree model. An interactive Streamlit interface enables users to upload data, view predictions, and input transaction details for real-time classification.
