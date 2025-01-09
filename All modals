@@ -1,0 +1,44 @@
+# Logistic Regression
+log_reg = LogisticRegression(max_iter=1000, random_state=42)
+log_reg.fit(X_train, y_train)
+y_pred = log_reg.predict(X_test)
+
+print("Logistic Regression Results")
+print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
+print(classification_report(y_test, y_pred))
+
+# Decision Tree
+decision_tree = DecisionTreeClassifier(random_state=42)
+decision_tree.fit(X_train, y_train)
+y_pred = decision_tree.predict(X_test)
+
+print("Decision Tree Results")
+print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
+print(classification_report(y_test, y_pred))
+
+# Random Forest
+random_forest = RandomForestClassifier(random_state=42)
+random_forest.fit(X_train, y_train)
+y_pred = random_forest.predict(X_test)
+
+print("Random Forest Results")
+print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
+print(classification_report(y_test, y_pred))
+
+# Gradient Boosting
+gbm = GradientBoostingClassifier(random_state=42)
+gbm.fit(X_train, y_train)
+y_pred = gbm.predict(X_test)
+
+print("Gradient Boosting Results")
+print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
+print(classification_report(y_test, y_pred))
+
+# K-Nearest Neighbors
+knn = KNeighborsClassifier()
+knn.fit(X_train, y_train)
+y_pred = knn.predict(X_test)
+
+print("KNN Results")
+print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
+print(classification_report(y_test, y_pred))
