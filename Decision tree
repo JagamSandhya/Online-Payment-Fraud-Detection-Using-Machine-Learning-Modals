@@ -1,0 +1,41 @@
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score, classification_report
+
+# Decision Tree
+decision_tree = DecisionTreeClassifier(random_state=42)
+decision_tree.fit(X_train, y_train)
+y_pred = decision_tree.predict(X_test)
+
+print("Decision Tree Results")
+print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
+print(classification_report(y_test, y_pred))
+
+from sklearn.tree import plot_tree
+import matplotlib.pyplot as plt
+
+# Plot the Decision Tree
+plt.figure(figsize=(20, 10))
+plot_tree(
+    decision_tree, 
+    feature_names=X.columns,  # Feature names
+    class_names=["Non-Fraud", "Fraud"],  # Class labels
+    filled=True, 
+    rounded=True, 
+    fontsize=10
+)
+plt.title("Decision Tree Structure")
+plt.show()
+
+from sklearn.metrics import ConfusionMatrixDisplay
+
+# Plot Confusion Matrix
+ConfusionMatrixDisplay.from_estimator(
+    decision_tree, 
+    X_test, 
+    y_test, 
+    display_labels=["Non-Fraud", "Fraud"], 
+    cmap="Blues",
+    values_format="d"
+)
+plt.title("Confusion Matrix")
+plt.show()
