@@ -6,3 +6,75 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from imblearn.over_sampling import SMOTE
 from sklearn.utils import shuffle
+
+data = pd.read_csv(r"C:\Users\dell\OneDrive\Desktop\MTech project\onlinefraud.csv")
+print("Dataset Overview:")
+print(data.head())
+print("Dataset Overview:")
+print(data.head())
+print(data.describe())
+missing_values = data.isnull().sum()
+print(missing_values)
+
+numeric_columns = data.select_dtypes(include=['float64', 'int64']).columns.drop('isFraud', errors='ignore')
+print(numeric_columns)
+categorical_columns = data.select_dtypes(include=['object', 'category']).columns
+print(categorical_columns)
+
+label_encoder = LabelEncoder()
+for column in categorical_columns:
+    data[column] = label_encoder.fit_transform(data[column])
+    print(data[column])
+print(data[categorical_columns].head())
+
+# Before encoding
+print(data['type'].value_counts())  
+sns.countplot(x=data['type'])
+plt.title("Distribution of Categorical Feature (Before Encoding)")
+plt.show()
+
+# After encoding
+print(data['type'].head())  # Check encoded values
+sns.histplot(data['type'], bins=len(data['type'].unique()))
+plt.title("Distribution of Encoded Feature")
+plt.show()
+X = data.drop('isFraud', axis=1)
+y = data['isFraud']
+print(X)
+print(y)
+
+print("Class distribution before handling imbalance:")
+print(y.value_counts())
+smote = SMOTE(random_state=42)
+X_resampled, y_resampled = smote.fit_resample(X, y)
+print(X_resampled)
+print(y_resampled)
+X_resampled, y_resampled = shuffle(X_resampled, y_resampled, random_state=42)
+print(X_resampled)
+print(y_resampled)
+
+print("Class distribution after SMOTE:")
+print(pd.Series(y_resampled).value_counts())
+
+from collections import Counter
+
+# Before SMOTE
+print("Before SMOTE:", Counter(y))
+sns.barplot(x=list(Counter(y).keys()), y=list(Counter(y).values()))
+plt.title("Class Distribution Before SMOTE")
+plt.xlabel("Class")
+plt.ylabel("Frequency")
+plt.show()
+
+# After SMOTE
+print("After SMOTE:", Counter(y_resampled))
+
+sns.barplot(x=list(Counter(y_resampled).keys()), y=list(Counter(y_resampled).values()))
+plt.title("Class Distribution After SMOTE")
+plt.xlabel("Class")
+plt.ylabel("Frequency")
+plt.show()
+
+X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size=0.2, random_state=42)
+print(X_train, X_test, y_train, y_test)
+
